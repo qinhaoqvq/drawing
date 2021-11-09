@@ -1,0 +1,45 @@
+@startuml
+interface BeanFactory{
+	+getBean(String name)
+}
+
+abstract AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory{
+	+getBean(String name)
+	#getBeanDefinition(String beanName)
+	#createBean(String beanName, BeanDefinition define)
+}
+
+abstract AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
+	#createBean(String beanName, BeanDefinition define)
+}
+
+class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry{
+	-Map<String,BeanDefinition> defineMap
+	+registerBeanDefinition(String beanName,BeanDefinition define)
+	+getBeanDefinition(String beanName)
+}
+
+
+interface SingletonBeanRegistry{
+	+getSingleton(String beanName)
+}
+
+class DefaultSingletonBeanRegistry implements SingletonBeanRegistry{
+	-Map<Sting,Object> singletonObjects
+	+getSingleton(String beanName)
+	#addSingleton(String beanName, Object singleton)
+}
+
+interface BeanDefinitionRegistry{
+	~registerBeanDefinition(String beanName, BeanDefinition define)
+}
+
+class BeanDefinition{
+	Class beanClass
+}
+
+
+
+DefaultListableBeanFactory ..> BeanDefinition
+
+@enduml
