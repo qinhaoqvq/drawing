@@ -1,0 +1,14 @@
+@startuml
+class BeanDefinition{
+	-Object bean
+}
+class BeanFactory{
+	-Map<String,BeanDefinition> defineMap
+	+getBean(String name)
+	+registerBeanDefinition(String name,BeanDefinition define)
+}
+class ApiTest{
+	+testBeanFactory()
+}
+BeanFactory ..> BeanDefinition
+@enduml
